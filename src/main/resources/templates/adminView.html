@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin View</title>
+</head>
+<body>
+
+<h1>Add user</h1>
+    <form method="POST" th:object="${user}">
+        <label for="firstname">Enter user firstname: </label>
+        <input type="text" id="firstname" th:field="*{firstName}" required><br/>
+
+        <label for="lastname">Enter user lastname: </label>
+        <input type="text" id="lastname" th:field="*{lastName}" required><br/>
+
+        <label for="username">Enter user username: </label>
+        <input type="text" id="username" th:field="*{userName}" required><br/>
+
+        <label for="email">Enter user email: </label>
+        <input type="text" id="email" th:field="*{email}" required><br/>
+
+        <button>add user</button>
+    </form>
+
+
+<table >
+    <thead class>
+    <tr>
+        <th>User Id</th>
+        <th>User Firstname</th>
+        <th>User Lastname</th>
+        <th>User Email</th>
+        <th>User Role</th>
+        <th>User Created</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${userList}">
+        <td th:text="${user.id}">User</td>
+        <td th:text="${user.firstName}">User</td>
+        <td th:text="${user.lastName}">User</td>
+        <td th:text="${user.email}">User</td>
+        <td th:text="${user.role}">User</td>
+        <td th:text="${user.createdAt}">User</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
