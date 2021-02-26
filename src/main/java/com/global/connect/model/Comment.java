@@ -1,47 +1,35 @@
 package com.global.connect.model;
 
+import com.global.connect.type.SubmissionType;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
-
-@Entity
-@Table(name = "comments")
 @Data
-public class Comment {
+@DiscriminatorValue("COMMENT")
+@Entity
+public class Comment extends Submission{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "content")
-    private String content;
-
-    @Column(name = "likes")
-    private Long likes;
-
-    @Column(name = "dislikes")
-    private Long dislikes;
-
-    @Column(name = "created_at")
-    private Date createdAt;
+    @Transient
+    private SubmissionType submissionType = SubmissionType.COMMENT;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "person_id")
+    private Person person;
 
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
 
-    public Comment() {
+    public Comment(){
+        this.setLikes(0l);
+        this.setDislikes(0l);
     }
 
     public Comment(String content) {
-        this.content = content;
+        super(content);
+        this.setLikes(0l);
+        this.setDislikes(0l);
     }
 
-    void  createdAt(){
-        this.createdAt = new Date();
-    }
 }

@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin View</title>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+
+<head th:insert="fragments/general.html :: headFragment">
 </head>
+
 <body>
+<nav th:insert="fragments/general.html :: navBarFragment"></nav>
 
 <h1>Add user</h1>
     <form method="POST" th:object="${user}">
@@ -37,15 +40,20 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="user : ${userList}">
-        <td th:text="${user.id}">User</td>
-        <td th:text="${user.firstName}">User</td>
-        <td th:text="${user.lastName}">User</td>
-        <td th:text="${user.email}">User</td>
-        <td th:text="${user.role}">User</td>
-        <td th:text="${user.createdAt}">User</td>
+    <tr th:each="person : ${personList}">
+        <td th:text="${person.id}">User</td>
+        <td th:text="${person.firstName}">User</td>
+        <td th:text="${person.lastName}">User</td>
+        <td th:text="${person.userName}">User
+        <td th:text="${person.email}">User</td>
+        <td th:text="${person.createdAt}">User</td>
     </tr>
     </tbody>
 </table>
+
+
+
+<script src="webjars/bootstrap/5.0.0-beta1/js/bootstrap.min.js"></script>
+<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
 </body>
 </html>

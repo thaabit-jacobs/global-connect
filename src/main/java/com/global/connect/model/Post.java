@@ -1,50 +1,37 @@
 package com.global.connect.model;
 
+import com.global.connect.type.SubmissionType;
 import lombok.Data;
+import org.springframework.data.annotation.ReadOnlyProperty;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
-@Entity
-@Table(name = "posts")
 @Data
-public class Post {
+@Entity
+@DiscriminatorValue("POST")
+public class Post extends Submission{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "content")
-    private String content;
-
-    @Column(name = "likes")
-    private Long likes;
-
-    @Column(name = "dislikes")
-    private Long dislikes;
-
-    @Column(name = "created_at")
-    private Date createdAt;
+    @Transient
+    private SubmissionType submissionType = SubmissionType.POST;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "person_id")
+    private Person person;
 
-    @OneToMany(mappedBy = "post")
-    private Set<Comment> comments = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
 
-    public Post() {
+    public Post(){
+        this.setLikes(0l);
+        this.setDislikes(0l);
     }
 
     public Post(String content) {
-        this.content = content;
-    }
-
-    @PrePersist
-    void createdAt(){
-        this.createdAt = new Date();
+        super(content);
+        this.setLikes(0l);
+        this.setDislikes(0l);
     }
 }
+
 

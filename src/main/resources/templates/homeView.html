@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head th:insert="fragments/general.html :: headFragment">
+
+</head>
+<body>
+<nav th:insert="fragments/general.html :: navBarFragment"></nav>
+
+
+
+<div class="container personFeed">
+    <h1 th:text="|Welcome ${username}|"></h1>
+
+
+    <div class="row">
+        <div class="col-3">
+
+        </div>
+
+        <div class="col-6">
+            <form method="POST" th:object="${post}" th:action="@{/posts}">
+                <fieldset>
+                    <legend>Create a new post</legend>
+
+                    <div class="mb-3">
+                        <textarea th:field="*{content}" class="form-control" id="postContent" rows="3"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">post</button>
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="col-3">
+
+        </div>
+    </div>
+
+
+
+
+    <!--posts for user -->
+    <div class="mt-2 mb-2 pt-2 pb-2 border border-primary border-2" th:each="post : ${postList}">
+        <p th:text="${post.content}"></p>
+        <p th:text="|Posted by ${post.person.userName}|"></p>
+        <p th:text="|Posted at ${post.createdAt}|"></p>
+        <p>
+            <a th:href="@{/home/post/like/{postId}(postId=${post.id})}">like</a>
+            <span th:text="${post.likes}"></span>
+
+            <a th:href="@{/home/post/dislike/{postId}(postId=${post.id})}">dislike</a>
+            <span th:text="${post.dislikes}"></span>
+        </p>
+        <a th:href="@{/posts/{postId}(postId=${post.id})}">comment</a>
+    </div>
+
+    <!--pagination -->
+    <div>
+        Total Items: [[${totalItems}]] - Page [[${currentPage}]] of [[${totalPages}]]
+        &nbsp; -  &nbsp;
+
+        <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+        <a th:if="${i != currentPage}" th:href="@{'/page/' + ${i}}">[[${i}]]</a>&nbsp;&nbsp;
+        <span th:unless="${i != currentPage}">[[${i}]]</span>&nbsp;&nbsp;
+    </span>
+    </div>
+</div>
+
+
+
+
+<script src="webjars/bootstrap/5.0.0-beta1/js/bootstrap.min.js"></script>
+<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+</body>
+</html>

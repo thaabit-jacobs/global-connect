@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head th:insert="fragments/general.html :: headFragment">
+
+</head>
+<body>
+<nav th:insert="fragments/general.html :: navBarFragment"></nav>
+
+<div>
+    <p th:text="${post.content}"></p>
+    <p th:text="|Posted by ${post.person.userName}|"></p>
+    <p th:text="|Posted at ${post.createdAt}|"></p>
+    <p>
+        <span th:text="|like: ${post.likes}|"></span>
+        <span th:text="|dislike: ${post.dislikes}|"></span>
+    </p>
+
+    <br/>
+
+
+    <form method="POST" th:object="${comment}" th:action="@{/home/comment/{postId}(postId=${post.id})}">
+        <label for="comment"></label>
+        <input th:field="*{content}" id="comment">
+
+        <button>comment</button>
+    </form>
+
+    <div th:each="comment : ${commentList}">
+        <p th:text="${comment.content}"></p>
+        <p th:text="|Posted by ${comment.person.userName}|"></p>
+        <p th:text="|Posted at ${comment.createdAt}|"></p>
+        <p>
+            <a th:href="@{/home/comment/like/{commentId}(commentId=${comment.id})}">like</a>
+            <span th:text="${comment.likes}"></span>
+
+            <a th:href="@{/home/comment/dislike/{commentId}(commentId=${comment.id})}">dislike</a>
+            <span th:text="${comment.dislikes}"></span>
+        </p>
+    </div>
+
+    <br/>
+</div>
+
+
+<script src="webjars/bootstrap/5.0.0-beta1/js/bootstrap.min.js"></script>
+<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+
+<head th:insert="fragments/general.html :: headFragment">
+
+</head>
+<body>
+<nav th:insert="fragments/general.html :: navBarFragment"></nav>
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-3">
+
+        </div>
+
+        <div class="col-6">
+            <form method="POST" th:object="${person}">
+                <fieldset>
+                    <legend>Login</legend>
+
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Enter username:</label>
+                        <input type="text" class="form-control" id="username" th:field="*{userName}" required><br/>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">login</button>
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="col-3">
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+    <script src="webjars/bootstrap/5.0.0-beta1/js/bootstrap.min.js"></script>
+    <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+</body>
+</html>
